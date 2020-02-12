@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 
 class Header extends Component {
-    state = {   }
-//     constructor() {
-//         super()
-//         this.handleClick.bind(this);
-//     }
-// handleClick() {
-//     console.log('button works!');    
-// }
     
 
     render() { 

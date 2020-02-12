@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 
 class Display extends Component {
     state = { 
+        
      }
   
 
     render() { 
-        const { firstName, lastName, email, notes, phoneNumber} = this.props;
+        const { firstName, lastName, email, phoneNumber, notes } = this.props;
         return (     
             <React.Fragment>
-                
             
             <div className= "container bg-light displayBox sm-2">
                 <span className="l-3">
