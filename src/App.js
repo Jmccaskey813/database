@@ -3,19 +3,18 @@ import Header from './components/header';
 // import Display from './components/display.jsx'
 import ContactForm from './components/ContactForm'
 import './App.css';
-var contacts;
+var contacts= []
 
 
 class App extends Component {
-  state = { 
-    contacts:{
+  state = {
+    fields: [{ 
         firstName: "Jacob",
         lastName: "McCaskey",
         email: "mccaskey316@gmail.com",
         phoneNumber: "813.516.0468",
-        notes: "Really wants to learn React"
-    }
-        
+        notes: "Really wants to learn React"    
+    }]   
  }
 
 
@@ -24,14 +23,9 @@ class App extends Component {
 }
 
 onSubmit= (fields)=>{
-  contacts = this.state;
-  contacts.firstName= fields.firstName
-  contacts.lastName = fields.lastName
-  contacts.email = fields.email
-  contacts.phoneNumber = fields.phoneNumber
-  contacts.notes = fields.notes
+  contacts.push(fields);
   this.setState({
-    contacts
+    fields : contacts
   })
   this.hideForm()
   console.log(this.state);
@@ -47,22 +41,43 @@ hideForm = ()=> {
   document.querySelector('.contact-form').style.display = "none";
 }
 
+
+
+delete= (key)=> {
+  var filteredContacts = this.state.fields.filter( item=> ( 
+     item.lastName !== key
+  ));
+  this.setState({
+    fields: filteredContacts
+  })
+  console.log(key);
+};
+
+createContact(person) {
+  const key= person.lastName
+  return  <div className= "container bg-light displayBox sm-2" key={person.lastName}>
+    <span className="l-3">
+        {person.firstName} {person.lastName}
+    </span>
+    <span> |  { person.email }</span>
+    <span>  | { person.phoneNumber }</span>
+    <span className= "overflow-hidden">  | notes: { person.notes }</span>
+    <button onClick= {()=> this.delete(key)}>delete</button>
+</div>
+}
+
+
+
   render() { 
-    const { contacts } = this.state;
+    var toInput = this.state.fields;
+    var entries = toInput.map(this.createContact);
     return ( 
       <React.Fragment>
       < Header openForm= {()=> this.openForm()}/>
-      <div className= "container bg-light displayBox sm-2">
-                <span className="l-3">
-                    {contacts.firstName} {contacts.lastName}
-                </span>
-                <span> |  { contacts.email }</span>
-                <span>  | { contacts.phoneNumber }</span>
-                <span className= "overflow-hidden">  | notes: { contacts.notes }</span>
-            </div>
-          
-     
-        < ContactForm onSubmit={fields=> this.onSubmit(fields)}/>
+        <div >{ entries } </div>
+        < ContactForm 
+          onSubmit={fields=> this.onSubmit(fields)}
+        />
       </React.Fragment>
      );
   }
